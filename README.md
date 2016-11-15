@@ -1,8 +1,8 @@
-# data-collection-agent
+# Data Collection Agent
 allows you to collect data from multiple website, and store it in a database.
 
 
-<h2>Packages:</h2>
+# Packages:
 <pre>
 \-shell 
   \-core -- centeral library for the shell
