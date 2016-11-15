@@ -1,5 +1,5 @@
 # Data Collection Agent
-allows you to collect data from multiple website, and store it in a database.
+Allows you to collect data from multiple website, and store it in a database.
 
 
 # Packages:
