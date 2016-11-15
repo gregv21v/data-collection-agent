@@ -2,8 +2,8 @@
 allows you to collect data from multiple website, and store it in a database.
 
 
-Packages:
-
+<h2>Packages:</h2>
+<pre>
 \-shell 
   \-core -- centeral library for the shell
     \-command.py
@@ -20,3 +20,4 @@ Packages:
    \-util
     \-searchTreeUtil.py -- used for searching data that is structured like a tree 
     \-util.py -- additional functions 
+</pre>
