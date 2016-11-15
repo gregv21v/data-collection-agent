@@ -1,0 +1,12 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+yelpCollector	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^yelpCollector = YelpCollector()$/;"	variable	line:16
+craigslistCollector	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^craigslistCollector = CraigslistCollector()$/;"	variable	line:17
+collector	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^collector = Collector()$/;"	variable	line:18
+choice	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^choice = raw_input()$/;"	variable	line:34
+cmd	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^    cmd = Command("")$/;"	variable	line:39
+cmd	C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)\Data Collection Agent\console.py	/^        cmd = Command(raw_input(">>"))$/;"	variable	line:41
