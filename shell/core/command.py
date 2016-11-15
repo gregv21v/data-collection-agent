@@ -32,6 +32,10 @@ class Command:
             self.name = cmdString.split(" ")[0]
             self.parameters = cmdString.split(" ")[1:]
 
+    '''
+        Get all the indices for the symbol present in
+        a command string.
+    '''
     def getIndicesOf(self, cmdString, symbol):
         quotes = []
         index = cmdString.find(symbol)

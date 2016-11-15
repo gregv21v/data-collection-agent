@@ -42,6 +42,8 @@ class Collector:
 
     def __init__(self):
         self.name = ""
+        self.mongoClient = None
+        self.db = None
         pass
 
     def loadCredentials(self):

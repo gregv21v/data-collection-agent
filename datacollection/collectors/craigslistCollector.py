@@ -63,10 +63,6 @@ class CraigslistCollector(TreeCollector):
             self.db["community"].insert_one(result)
 
 
-
-    def collectAll(self):
-        pass
-
     # Store a records in the db.
     def store(self, data):
         for record in records:

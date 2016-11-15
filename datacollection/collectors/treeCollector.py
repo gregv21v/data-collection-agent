@@ -40,8 +40,3 @@ class TreeCollector(Collector):
         f = open(path, "r")
         self.progressTree = json.loads(f.read())
         f.close()
-
-
-    # Collects all the data from the categories tree
-    def collectAll(self):
-        pass
