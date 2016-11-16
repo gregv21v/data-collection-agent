@@ -211,6 +211,4 @@ class YelpCollector(Collector):
 
 
 
-    def display(self):
-        print("Business Count: " + str(len(self.yelpClient.search("Boston, MA", {"limit" : 1000}).businesses)))
-        #print()
+    

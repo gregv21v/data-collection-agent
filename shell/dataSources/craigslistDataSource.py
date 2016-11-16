@@ -5,7 +5,7 @@
 
 
 from datacollection.collectors.craigslistCollector import *
-from shell.dataSources.dataSource import *
+from dataSources.dataSource import *
 from shell.core.command import *
 
 class CraigslistDataSource(DataSource):
@@ -39,7 +39,7 @@ class CraigslistDataSource(DataSource):
                 elif(cmd.name == "sampleCollect"): # sample shows a quick little example
                     self.collector.sample()
                 elif(cmd.name == "sampleStore"):
-                    res
+                    self.collector.sampleStore()
                 elif(cmd.name == "list"):
                     print("List all the categories and subcategories available.")
                     # GUI NOTE:
