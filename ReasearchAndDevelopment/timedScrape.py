@@ -116,6 +116,9 @@ def processChild(tree, parentFunc, childFunc):
     Scrapes all the data from craigslist
 '''
 def scrapeData():
+    rec = open("record.txt", "a")
+    rec.write("started scrapping" + datetime.datetime.now())
+
     curCount = 0
     count = 10 # the amount of results to scrape per cycle
     waitTime = 60 # wait time between scrape batches
@@ -145,9 +148,22 @@ def scrapeData():
 
                 # ====> Interrupt at this point
 
+
                 curCount += 1
                 if(curCount % 100 == 0):
                     time.sleep(waitTime)
+
+                    # check the time.
+                    # if the time is 9am stop scrapping,
+                    # otherwise continue
+                    currentTime = datetime.datetime.now()
+                    if(currentTime.hour >= 9):
+                        print("Stopped time")
+                        f.write("ended scrapping" + datetime.datetime.now())
+
+    f.write("ended scrapping" + datetime.datetime.now())
+
+
 
 schedule.every().day.at("22:00").do(scrapeData)
 
