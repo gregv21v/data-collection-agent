@@ -5,9 +5,9 @@
 
     Stages:
         Develop timing mechanism.
-        Create a fictious scenario to better understand how the tree
+        (DONE) Create a fictious scenario to better understand how the tree
             is going to integrate in to the timing scheme.
-        Add access to craigslist without actually scrapping
+        (DONE) Add access to craigslist without actually scrapping
             Basically, searches are made, but no data is taken
             from those searches. I will leave this timing
             scheme running overnight, which means I have to
@@ -18,14 +18,23 @@
             The data from craigslist will actually be collected,
             but none of it will actually be stored. Once this
             stage is successful, I will begin to store the results.
+
+            1. Collect only the basic data. Don't dig into the links
+            yet. That can be done later.
+            2. Now dig into the links.
+
         Add access to craigslist with storing
             Now we can store the data because we know it works.
 '''
 
 import time
+import json
+import pprint
+from util import *
 
 
 bariRoot = "C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)"
+curCount = 0
 count = 10 # the amount of results to scrape per cycle
 waitTime = 3 # we will likely want the wait time
              # to be variable, because craigslist
@@ -62,20 +71,40 @@ tree = {
     ]
 }
 
+pp = pprint.PrettyPrinter(indent=4)
+
+
+
+
 
 
 '''
     reform the search tree into
     a list so that it is easier to
     work with.
+
+    Each entry will end up like this:
+        {category, subcategory, name, term}
 '''
-def buildList(tree):
+def buildList(tree, depth=0):
     res = []
+
     for child in tree["children"]:
         if("children" in child): # child has children
-            res += buildList(child)
+            newChild = child
+            if(depth == 1):
+                newChild = merge_dicts(child, {"parent" : tree["name"]})
+            elif(depth > 1):
+                newChild = merge_dicts(child, {"parent" : tree["parent"]})
+            res += buildList(newChild, depth+1)
         else:
-            res.append(child)
+            #newChild = merge_dicts(child, {"parent" : tree["name"]})
+            newChild = child
+            if(depth == 1):
+                newChild = merge_dicts(child, {"parent" : tree["name"]})
+            elif(depth > 1):
+                newChild = merge_dicts(child, {"parent" : tree["parent"]})
+            res.append(newChild)
 
     return res
 
@@ -88,10 +117,10 @@ def printChild(child):
 
 def printParent(parent):
     # remove children fields
-    newParent = {
-        "name" : parent["name"],
-        "count" : parent["count"]
-    }
+    newParent = {}
+    for key in parent:
+        if(key != "children"):
+            newParent[key] = parent[key]
     print(newParent)
 
 '''
@@ -107,14 +136,35 @@ def processChild(tree, parentFunc, childFunc):
             childFunc(child)
 
 
+f = open("modifiedTrees/all.json", "r")
+craigslistTree = json.loads(f.read())
 
 
-#processChild(tree, printParent, printChild)
+#processChild(craigslistTree, printParent, printChild)
+craigslistList = buildList(craigslistTree)
 
-# 
 
-#while(curCount < maxCount):
-    # scrape x results
+# first iteration:
+# make craigslist searches, but don't scrape any
+# results.
+
+#pp.pprint(craigslistList)
+for term in craigslistList:
+    run_search(term["parent"], term["searchTerm"])
+
+    print("Searched: " + term["parent"] + " " + term["searchTerm"])
+
+    curCount += 1
+    if(curCount % 20 == 0):
+        print("Waiting some time")
+
+
+
+
+
+
+
+
 
 
 
