@@ -14,7 +14,7 @@
             implement something that will run even when I am
             not accessing the terminal of the server. (I can ask
             Tony about this.)
-        Add access to craigslist with scrapping
+        (DONE) Add access to craigslist with scrapping
             The data from craigslist will actually be collected,
             but none of it will actually be stored. Once this
             stage is successful, I will begin to store the results.
@@ -23,55 +23,31 @@
             yet. That can be done later.
             2. Now dig into the links.
 
+        (DONE) Start the scrapping at 10pm, then end at 9am.
+            Those hours are the peak scrapping times,
+            because craigslist has the least traffic at
+            those times.
+
         Add access to craigslist with storing
             Now we can store the data because we know it works.
+
+        Store the data with the extra link information
 '''
 
 import time
 import json
+import schedule
 import pprint
 from util import *
 
-
+pp = pprint.PrettyPrinter(indent=4)
 bariRoot = "C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)"
-curCount = 0
-count = 10 # the amount of results to scrape per cycle
-waitTime = 3 # we will likely want the wait time
-             # to be variable, because craigslist
-             # may be looking for patterns
-             # and a consistent wait time would
-             # be the easist to detect.
+
 
 
 # search tree: for terms to scrape
-tree = {
-    "name" : "Root",
-    "children" : [
-        {
-            "name" : "activities", # the name of the category
-            "count" : 20, # number of results that will result from this query
-            "children" : [
-                {
-                    "name" : "child11", # the name of the category
-                    "term" : "c11", # the category name, which is also the search term
-                    "count" : 5 # number of results that will result from this query
-                },
-                {
-                    "name" : "child12", # the name of the category
-                    "term" : "c12", # the category name, which is also the search term
-                    "count" : 20 # number of results that will result from this query
-                }
-            ]
-        },
-        {
-            "name" : "child1", # the name of the category
-            "term" : "c1", # the category name, which is also the search term
-            "count" : 15 # number of results that will result from this query
-        }
-    ]
-}
 
-pp = pprint.PrettyPrinter(indent=4)
+
 
 
 
@@ -79,7 +55,7 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 '''
-    reform the search tree into
+    Restructure the search tree into
     a list so that it is easier to
     work with.
 
@@ -136,37 +112,45 @@ def processChild(tree, parentFunc, childFunc):
             childFunc(child)
 
 
-f = open("modifiedTrees/all.json", "r")
-craigslistTree = json.loads(f.read())
+'''
+    Scrapes all the data from craigslist
+'''
+def scrapeData():
+    curCount = 0
+    count = 10 # the amount of results to scrape per cycle
+    waitTime = 60 # wait time between scrape batches
 
 
-#processChild(craigslistTree, printParent, printChild)
-craigslistList = buildList(craigslistTree)
+    print("Scrapping Data")
+    f = open("modifiedTrees/all.json", "r")
+    craigslistTree = json.loads(f.read())
+    craigslistList = buildList(craigslistTree)
 
+    start = 0
+    for index in range(start, len(craigslistList)):
+        term = craigslistList[index]
 
-# first iteration:
-# make craigslist searches, but don't scrape any
-# results.
+        if("searchTerm" in term):
+            print("Searched: " + term["parent"] + " " + term["searchTerm"])
 
-#pp.pprint(craigslistList)
-for term in craigslistList:
-    run_search(term["parent"], term["searchTerm"])
+            # ====> Interrupt at this point
+            # ====> This interrupt allows the program to
+            #       only run at certain times.
 
-    print("Searched: " + term["parent"] + " " + term["searchTerm"])
+            query = run_search(term["parent"], term["searchTerm"])
+            results = query.get_results()
 
-    curCount += 1
-    if(curCount % 20 == 0):
-        print("Waiting some time")
+            for result in results:
+                print(result)
 
+                # ====> Interrupt at this point
 
+                curCount += 1
+                if(curCount % 100 == 0):
+                    time.sleep(waitTime)
 
+schedule.every().day.at("22:00").do(scrapeData)
 
-
-
-
-
-
-
-
-
-    #time.sleep(waitTime)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
