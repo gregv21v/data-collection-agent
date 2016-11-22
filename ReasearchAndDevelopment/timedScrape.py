@@ -35,13 +35,16 @@
 '''
 
 import time
-import datetime
 import json
 import schedule
 import pprint
 from util import *
 
 pp = pprint.PrettyPrinter(indent=4)
+bariRoot = "C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)"
+
+
+
 # search tree: for terms to scrape
 
 
@@ -113,8 +116,8 @@ def processChild(tree, parentFunc, childFunc):
     Scrapes all the data from craigslist
 '''
 def scrapeData():
-    rec = open("record.txt", "w")
-    rec.write("started scrapping" + str(datetime.datetime.now()))
+    rec = open("record.txt", "a")
+    rec.write("started scrapping" + datetime.datetime.now())
 
     curCount = 0
     count = 10 # the amount of results to scrape per cycle
@@ -158,7 +161,8 @@ def scrapeData():
                         print("Stopped time")
                         f.write("ended scrapping" + datetime.datetime.now())
 
-    f.write("ended scrapping" + str(datetime.datetime.now()))
+    f.write("ended scrapping" + datetime.datetime.now())
+
 
 
 schedule.every().day.at("22:00").do(scrapeData)
