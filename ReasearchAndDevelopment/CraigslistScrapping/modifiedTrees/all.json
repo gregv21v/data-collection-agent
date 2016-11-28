@@ -1,0 +1,731 @@
+{
+    "name": "craigslist",
+    "children": [
+        {
+            "name": "jobs",
+            "children": [
+                {
+                    "searchTerm": "acc",
+                    "name": "accounting+finance"
+                },
+                {
+                    "searchTerm": "ofc",
+                    "name": "admin / office"
+                },
+                {
+                    "searchTerm": "egr",
+                    "name": "arch / engineering"
+                },
+                {
+                    "searchTerm": "med",
+                    "name": "art / media / design"
+                },
+                {
+                    "searchTerm": "sci",
+                    "name": "biotech / science"
+                },
+                {
+                    "searchTerm": "bus",
+                    "name": "business / mgmt"
+                },
+                {
+                    "searchTerm": "csr",
+                    "name": "customer service"
+                },
+                {
+                    "searchTerm": "edu",
+                    "name": "education"
+                },
+                {
+                    "searchTerm": "fbh",
+                    "name": "food / bev / hosp"
+                },
+                {
+                    "searchTerm": "lab",
+                    "name": "general labor"
+                },
+                {
+                    "searchTerm": "gov",
+                    "name": "government"
+                },
+                {
+                    "searchTerm": "hum",
+                    "name": "human resources"
+                },
+                {
+                    "searchTerm": "eng",
+                    "name": "internet engineers"
+                },
+                {
+                    "searchTerm": "lgl",
+                    "name": "legal  /  paralegal"
+                },
+                {
+                    "searchTerm": "mnu",
+                    "name": "manufacturing"
+                },
+                {
+                    "searchTerm": "mar",
+                    "name": "marketing / pr / ad"
+                },
+                {
+                    "searchTerm": "hea",
+                    "name": "medical / health"
+                },
+                {
+                    "searchTerm": "npo",
+                    "name": "nonprofit sector"
+                },
+                {
+                    "searchTerm": "rej",
+                    "name": "real estate"
+                },
+                {
+                    "searchTerm": "ret",
+                    "name": "retail / wholesale"
+                },
+                {
+                    "searchTerm": "sls",
+                    "name": "sales / biz dev"
+                },
+                {
+                    "searchTerm": "spa",
+                    "name": "salon / spa / fitness"
+                },
+                {
+                    "searchTerm": "sec",
+                    "name": "security"
+                },
+                {
+                    "searchTerm": "trd",
+                    "name": "skilled trade / craft"
+                },
+                {
+                    "searchTerm": "sof",
+                    "name": "software / qa / dba"
+                },
+                {
+                    "searchTerm": "sad",
+                    "name": "systems / network"
+                },
+                {
+                    "searchTerm": "tch",
+                    "name": "technical support"
+                },
+                {
+                    "searchTerm": "trp",
+                    "name": "transport"
+                },
+                {
+                    "searchTerm": "tfr",
+                    "name": "tv / film / video"
+                },
+                {
+                    "searchTerm": "web",
+                    "name": "web / info design"
+                },
+                {
+                    "searchTerm": "wri",
+                    "name": "writing / editing"
+                },
+                {
+                    "searchTerm": "etc",
+                    "name": "[ETC]"
+                },
+                {
+                    "searchTerm": "jjj?employment_type=2",
+                    "name": "[ part-time ]"
+                }
+            ]
+        },
+        {
+            "name": "housing",
+            "children": [
+                {
+                    "name": "apts / housing",
+                    "children": [
+                        {
+                            "searchTerm": "aap",
+                            "name": "all apartments"
+                        },
+                        {
+                            "searchTerm": "nfa",
+                            "name": "all no-fee apartments"
+                        },
+                        {
+                            "searchTerm": "abo",
+                            "name": "by-owner apartments only"
+                        },
+                        {
+                            "searchTerm": "aiv",
+                            "name": "registration fee"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "swp",
+                    "name": "housing swap"
+                },
+                {
+                    "searchTerm": "hsw",
+                    "name": "housing wanted"
+                },
+                {
+                    "searchTerm": "off",
+                    "name": "office / commercial"
+                },
+                {
+                    "searchTerm": "prk",
+                    "name": "parking / storage"
+                },
+                {
+                    "searchTerm": "rea",
+                    "name": "real estate for sale"
+                },
+                {
+                    "searchTerm": "roo",
+                    "name": "rooms / shared"
+                },
+                {
+                    "searchTerm": "sha",
+                    "name": "rooms wanted"
+                },
+                {
+                    "searchTerm": "sub",
+                    "name": "sublets / temporary"
+                },
+                {
+                    "searchTerm": "vac",
+                    "name": "vacation rentals"
+                }
+            ]
+        },
+        {
+            "name": "gigs",
+            "children": [
+                {
+                    "searchTerm": "cpg",
+                    "name": "computer"
+                },
+                {
+                    "searchTerm": "crg",
+                    "name": "creative"
+                },
+                {
+                    "searchTerm": "cwg",
+                    "name": "crew"
+                },
+                {
+                    "searchTerm": "dmg",
+                    "name": "domestic"
+                },
+                {
+                    "searchTerm": "evg",
+                    "name": "event"
+                },
+                {
+                    "searchTerm": "lbg",
+                    "name": "labor"
+                },
+                {
+                    "searchTerm": "tlg",
+                    "name": "talent"
+                },
+                {
+                    "searchTerm": "wrg",
+                    "name": "writing"
+                }
+            ]
+        },
+        {
+            "name": "community",
+            "children": [
+                {
+                    "searchTerm": "act",
+                    "name": "activities"
+                },
+                {
+                    "searchTerm": "ats",
+                    "name": "artists"
+                },
+                {
+                    "searchTerm": "kid",
+                    "name": "childcare"
+                },
+                {
+                    "searchTerm": "cls",
+                    "name": "classes"
+                },
+                {
+                    "searchTerm": "eve",
+                    "name": "events"
+                },
+                {
+                    "searchTerm": "com",
+                    "name": "general"
+                },
+                {
+                    "searchTerm": "grp",
+                    "name": "groups"
+                },
+                {
+                    "searchTerm": "vnn",
+                    "name": "local\u00a0news"
+                },
+                {
+                    "searchTerm": "laf",
+                    "name": "lost+found"
+                },
+                {
+                    "searchTerm": "muc",
+                    "name": "musicians"
+                },
+                {
+                    "searchTerm": "pet",
+                    "name": "pets"
+                },
+                {
+                    "searchTerm": "pol",
+                    "name": "politics"
+                },
+                {
+                    "searchTerm": "rid",
+                    "name": "rideshare"
+                },
+                {
+                    "searchTerm": "vol",
+                    "name": "volunteers"
+                }
+            ]
+        },
+        {
+            "name": "resumes",
+            "children": []
+        },
+        {
+            "name": "services",
+            "children": [
+                {
+                    "searchTerm": "aos",
+                    "name": "automotive"
+                },
+                {
+                    "searchTerm": "bts",
+                    "name": "beauty"
+                },
+                {
+                    "searchTerm": "cps",
+                    "name": "computer"
+                },
+                {
+                    "searchTerm": "crs",
+                    "name": "creative"
+                },
+                {
+                    "searchTerm": "cys",
+                    "name": "cycle"
+                },
+                {
+                    "searchTerm": "evs",
+                    "name": "event"
+                },
+                {
+                    "searchTerm": "fgs",
+                    "name": "farm+garden"
+                },
+                {
+                    "searchTerm": "fns",
+                    "name": "financial"
+                },
+                {
+                    "searchTerm": "hss",
+                    "name": "household"
+                },
+                {
+                    "searchTerm": "lbs",
+                    "name": "labor/move"
+                },
+                {
+                    "searchTerm": "lgs",
+                    "name": "legal"
+                },
+                {
+                    "searchTerm": "lss",
+                    "name": "lessons"
+                },
+                {
+                    "searchTerm": "mas",
+                    "name": "marine"
+                },
+                {
+                    "searchTerm": "pas",
+                    "name": "pet"
+                },
+                {
+                    "searchTerm": "rts",
+                    "name": "real estate"
+                },
+                {
+                    "searchTerm": "sks",
+                    "name": "skill'd trade"
+                },
+                {
+                    "searchTerm": "biz",
+                    "name": "sm biz ads"
+                },
+                {
+                    "searchTerm": "thp",
+                    "name": "therapeutic"
+                },
+                {
+                    "searchTerm": "trv",
+                    "name": "travel/vac"
+                },
+                {
+                    "searchTerm": "wet",
+                    "name": "write/ed/tr8"
+                }
+            ]
+        },
+        {
+            "name": "personals",
+            "children": [
+                {
+                    "searchTerm": "stp",
+                    "name": "strictly platonic"
+                },
+                {
+                    "searchTerm": "w4w",
+                    "name": "women seek women"
+                },
+                {
+                    "searchTerm": "w4m",
+                    "name": "women seeking men"
+                },
+                {
+                    "searchTerm": "m4w",
+                    "name": "men seeking women"
+                },
+                {
+                    "searchTerm": "m4m",
+                    "name": "men seeking men"
+                },
+                {
+                    "searchTerm": "msr",
+                    "name": "misc romance"
+                },
+                {
+                    "searchTerm": "cas",
+                    "name": "casual encounters"
+                },
+                {
+                    "searchTerm": "mis",
+                    "name": "missed connections"
+                },
+                {
+                    "searchTerm": "rnr",
+                    "name": "rants and raves"
+                }
+            ]
+        },
+        {
+            "name": "forSale",
+            "children": [
+                {
+                    "searchTerm": "ata",
+                    "name": "antiques"
+                },
+                {
+                    "searchTerm": "ppa",
+                    "name": "appliances"
+                },
+                {
+                    "searchTerm": "ara",
+                    "name": "arts+crafts"
+                },
+                {
+                    "searchTerm": "sna",
+                    "name": "atv/utv/sno"
+                },
+                {
+                    "name": "auto parts",
+                    "children": [
+                        {
+                            "searchTerm": "wta",
+                            "name": "ALL WHEELS AND TIRES"
+                        },
+                        {
+                            "searchTerm": "wto",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "wtd",
+                            "name": "BY-DEALER ONLY"
+                        },
+                        {
+                            "searchTerm": "pta",
+                            "name": "ALL GENERAL AUTO PARTS"
+                        },
+                        {
+                            "searchTerm": "pts",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "ptd",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "baa",
+                    "name": "baby+kid"
+                },
+                {
+                    "searchTerm": "bar",
+                    "name": "barter"
+                },
+                {
+                    "searchTerm": "haa",
+                    "name": "beauty+hlth"
+                },
+                {
+                    "name": "bikes",
+                    "children": [
+                        {
+                            "searchTerm": "bia",
+                            "name": "ALL BICYCLES"
+                        },
+                        {
+                            "searchTerm": "bik",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "bid",
+                            "name": "BY-DEALER ONLY"
+                        },
+                        {
+                            "searchTerm": "bip",
+                            "name": "ALL PARTS & ACCESSORIES"
+                        },
+                        {
+                            "searchTerm": "bop",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "bdp",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "name": "boats",
+                    "children": [
+                        {
+                            "searchTerm": "boo",
+                            "name": "ALL BOATS"
+                        },
+                        {
+                            "searchTerm": "boa",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "bod",
+                            "name": "BY-DEALER ONLY"
+                        },
+                        {
+                            "searchTerm": "bpa",
+                            "name": "ALL PARTS & ACCESSORIES"
+                        },
+                        {
+                            "searchTerm": "bpo",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "bpd",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "bka",
+                    "name": "books"
+                },
+                {
+                    "searchTerm": "bfa",
+                    "name": "business"
+                },
+                {
+                    "name": "cars+trucks",
+                    "children": [
+                        {
+                            "searchTerm": "cta",
+                            "name": "ALL CARS & TRUCKS"
+                        },
+                        {
+                            "searchTerm": "cto",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "ctd",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "ema",
+                    "name": "cds/dvd/vhs"
+                },
+                {
+                    "searchTerm": "moa",
+                    "name": "cell phones"
+                },
+                {
+                    "searchTerm": "cla",
+                    "name": "clothes+acc"
+                },
+                {
+                    "searchTerm": "cba",
+                    "name": "collectibles"
+                },
+                {
+                    "name": "computers",
+                    "children": [
+                        {
+                            "searchTerm": "sya",
+                            "name": "ALL COMPUTERS"
+                        },
+                        {
+                            "searchTerm": "sys",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "syd",
+                            "name": "BY-DEALER ONLY"
+                        },
+                        {
+                            "searchTerm": "syp",
+                            "name": "ALL PARTS & ACCESSORIES"
+                        },
+                        {
+                            "searchTerm": "sop",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "sdp",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "ela",
+                    "name": "electronics"
+                },
+                {
+                    "searchTerm": "gra",
+                    "name": "farm+garden"
+                },
+                {
+                    "searchTerm": "zip",
+                    "name": "free"
+                },
+                {
+                    "searchTerm": "fua",
+                    "name": "furniture"
+                },
+                {
+                    "searchTerm": "gms",
+                    "name": "garage sale"
+                },
+                {
+                    "searchTerm": "foa",
+                    "name": "general"
+                },
+                {
+                    "searchTerm": "hva",
+                    "name": "heavy equip"
+                },
+                {
+                    "searchTerm": "hsa",
+                    "name": "household"
+                },
+                {
+                    "searchTerm": "jwa",
+                    "name": "jewelry"
+                },
+                {
+                    "searchTerm": "maa",
+                    "name": "materials"
+                },
+                {
+                    "name": "motorcycles",
+                    "children": [
+                        {
+                            "searchTerm": "mca",
+                            "name": "ALL MOTORCYCLES"
+                        },
+                        {
+                            "searchTerm": "mcy",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "mcd",
+                            "name": "BY-DEALER ONLY"
+                        },
+                        {
+                            "searchTerm": "mpa",
+                            "name": "ALL PARTS & ACCESSORIES"
+                        },
+                        {
+                            "searchTerm": "mpo",
+                            "name": "BY-OWNER ONLY"
+                        },
+                        {
+                            "searchTerm": "mpd",
+                            "name": "BY-DEALER ONLY"
+                        }
+                    ]
+                },
+                {
+                    "searchTerm": "msa",
+                    "name": "music instr"
+                },
+                {
+                    "searchTerm": "pha",
+                    "name": "photo+video"
+                },
+                {
+                    "searchTerm": "rva",
+                    "name": "rvs+camp"
+                },
+                {
+                    "searchTerm": "sga",
+                    "name": "sporting"
+                },
+                {
+                    "searchTerm": "tia",
+                    "name": "tickets"
+                },
+                {
+                    "searchTerm": "tla",
+                    "name": "tools"
+                },
+                {
+                    "searchTerm": "taa",
+                    "name": "toys+games"
+                },
+                {
+                    "searchTerm": "tra",
+                    "name": "trailers"
+                },
+                {
+                    "searchTerm": "vga",
+                    "name": "video gaming"
+                },
+                {
+                    "searchTerm": "waa",
+                    "name": "wanted"
+                }
+            ]
+        }
+    ]
+}

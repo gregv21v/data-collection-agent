@@ -5,8 +5,10 @@
 
 
 from datacollection.collectors.craigslistCollector import *
-from dataSources.dataSource import *
+from dataSource import *
 from shell.core.command import *
+import schedule
+import time
 
 class CraigslistDataSource(DataSource):
 
@@ -40,6 +42,12 @@ class CraigslistDataSource(DataSource):
                     self.collector.sample()
                 elif(cmd.name == "sampleStore"):
                     self.collector.sampleStore()
+                elif(cmd.name == "scheduleCollect"):
+                    timeOfDay = cmd.parameters[0]
+                    schedule.every().day.at(timeOfDay).do(self.collector.scrapeJob)
+                    while True:
+                        schedule.run_pending()
+                        time.sleep(1)
                 elif(cmd.name == "list"):
                     print("List all the categories and subcategories available.")
                     # GUI NOTE:
@@ -66,3 +74,4 @@ class CraigslistDataSource(DataSource):
         print("list --- lists all of the categories and subcategories")
         print("collect [category] [subcategory] [\{additionalFields...\}]--- searches by subcategory")
         print("help --- displays this menu")
+        print("scheduleCollect [time of day] --- collects data at a specific time of day")

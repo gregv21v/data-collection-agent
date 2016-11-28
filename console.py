@@ -16,9 +16,6 @@ from shell.dataSources.craigslistDataSource import *
 
 from shell.core.command import *
 
-# TODO: Schedule data collection
-
-
 
 print("Which source do you want to scrape from?")
 print("Type 'options' or 'o' to see what sources are available.")
@@ -41,12 +38,3 @@ elif(choice == "meetup" or choice == "m"):
     #print("Meetup: ")
     dataSource = MeetupDataSource()
     dataSource.processCmd()
-
-
-
-
-
-
-
-
-#choice =

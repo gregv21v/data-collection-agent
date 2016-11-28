@@ -1,0 +1,100 @@
+{
+    "name": "craigslist", 
+    "children": [
+        {
+            "name": "housing", 
+            "children": [
+                {
+                    "name": "apts / housing", 
+                    "children": [
+                        {
+                            "searchTerm": "aap", 
+                            "name": "all apartments"
+                        }, 
+                        {
+                            "searchTerm": "aiv", 
+                            "name": "registration fee"
+                        }
+                    ]
+                }, 
+                {
+                    "searchTerm": "swp", 
+                    "name": "housing swap"
+                }, 
+                {
+                    "searchTerm": "hsw", 
+                    "name": "housing wanted"
+                }, 
+                {
+                    "searchTerm": "off", 
+                    "name": "office / commercial"
+                }, 
+                {
+                    "searchTerm": "prk", 
+                    "name": "parking / storage"
+                }, 
+                {
+                    "searchTerm": "rea", 
+                    "name": "real estate for sale"
+                }, 
+                {
+                    "searchTerm": "roo", 
+                    "name": "rooms / shared"
+                }, 
+                {
+                    "searchTerm": "sha", 
+                    "name": "rooms wanted"
+                }, 
+                {
+                    "searchTerm": "sub", 
+                    "name": "sublets / temporary"
+                }, 
+                {
+                    "searchTerm": "vac", 
+                    "name": "vacation rentals"
+                }
+            ]
+        }, 
+        {
+            "name": "personals", 
+            "children": [
+                {
+                    "searchTerm": "stp", 
+                    "name": "strictly platonic"
+                }, 
+                {
+                    "searchTerm": "w4w", 
+                    "name": "women seek women"
+                }, 
+                {
+                    "searchTerm": "w4m", 
+                    "name": "women seeking men"
+                }, 
+                {
+                    "searchTerm": "m4w", 
+                    "name": "men seeking women"
+                }, 
+                {
+                    "searchTerm": "m4m", 
+                    "name": "men seeking men"
+                }, 
+                {
+                    "searchTerm": "msr", 
+                    "name": "misc romance"
+                }, 
+                {
+                    "searchTerm": "cas", 
+                    "name": "casual encounters"
+                }, 
+                {
+                    "searchTerm": "mis", 
+                    "name": "missed connections"
+                }, 
+                {
+                    "searchTerm": "rnr", 
+                    "name": "rants and raves"
+                }
+            ]
+        }
+    ]
+}

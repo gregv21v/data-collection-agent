@@ -1,11 +1,14 @@
-
-
 from craigslist import *
 from craiglistPost import *
 from treeCollector import *
 from datacollection.util.util import *
 from pymongo import MongoClient
+import os
 import json
+import datetime
+import time
+
+
 
 
 
@@ -29,7 +32,6 @@ import json
 
 class CraigslistCollector(TreeCollector):
 
-
     def __init__(self):
         self.name = "craigslist"
         creds = self.loadCredentials()
@@ -39,6 +41,39 @@ class CraigslistCollector(TreeCollector):
             creds["mongodb"]
         )
         self.db = self.mongoClient.get_default_database()
+        #self.db["test"].insert_one({"a": 0})
+
+
+
+
+
+    '''
+        Convert the original search tree into a list.
+
+        Each entry will end up like this:
+            {category, subcategory, name, term}
+    '''
+    def buildList(self, tree, depth=0):
+        res = []
+
+        for child in tree["children"]:
+            if("children" in child): # child has children
+                newChild = child
+                if(depth == 1):
+                    newChild = merge_dicts(child, {"parent" : tree["name"]})
+                elif(depth > 1):
+                    newChild = merge_dicts(child, {"parent" : tree["parent"]})
+                res += self.buildList(newChild, depth+1)
+            else:
+                #newChild = merge_dicts(child, {"parent" : tree["name"]})
+                newChild = child
+                if(depth == 1):
+                    newChild = merge_dicts(child, {"parent" : tree["name"]})
+                elif(depth > 1):
+                    newChild = merge_dicts(child, {"parent" : tree["parent"]})
+                res.append(newChild)
+
+        return res
 
 
     '''
@@ -62,16 +97,16 @@ class CraigslistCollector(TreeCollector):
         for result in results:
             self.db["community"].insert_one(result)
 
-
-    # Store a records in the db.
+    '''
+        Store a record in the database.
+    '''
     def store(self, data):
         for record in records:
             self.mongoClient.insert_one(record)
 
-
-
-
-    # Collect a record by it's id.
+    '''
+        Collect a record by id.
+    '''
     def collectById(self, id):
         pass
 
@@ -109,16 +144,92 @@ class CraigslistCollector(TreeCollector):
                     post.retieveImageUrls()
 
             if(stored):
-                self.db[category].insertOne(post.data)
+                self.db[category].insert_one(post.data)
 
 
             resArray.append(result)
 
         return resArray
 
-    def collectTree(self):
-        # go through the search to collect all the data
+    '''
+        Collect all data
+        ==================================================
+        termList: the search terms
+        start: the starting index of the search terms
+        waitTime: time to wait in between scrapes
+        resCount: the number of results that are scrapped
+            before waiting.
+    '''
+    def collectAll(self, termList, start, waitTime, resCount):
+        print("Started Collection")
 
-        # start where the progress tree left off.
+        rec = open("record.txt", "a")
+        rec.write("started scrapping" + str(datetime.datetime.now()) + "\n")
 
-        pass
+        for index in range(start, len(termList)):
+            term = termList[index]
+
+            if("searchTerm" in term):
+                print("Searched: " + term["parent"] + " " + term["searchTerm"])
+
+                # ====> Interrupt at this point
+                # ====> This interrupt allows the program to
+                #       only run at certain times.
+
+                query = run_search(term["parent"], term["searchTerm"])
+                results = query.get_results()
+
+                resNum = 0 # the result number
+                curCount = 0
+                for result in results:
+
+                    # store the result
+                    print(result)
+                    self.db[term["parent"]].insert_one({"result" : "result"})
+
+                    resNum += 1
+
+
+                    curCount += 1
+                    if(curCount % resCount == 0):
+                        time.sleep(waitTime)
+
+                        # check the time.
+                        # if the time is 9am stop scrapping,
+                        # otherwise continue
+                        currentTime = datetime.datetime.now()
+                        if(currentTime.hour >= 9):
+                            #print("Stopped time")
+                            rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+
+                            # save progress
+                            prog = open("progress.txt", "w")
+                            #prog.write(str(index))
+                            prog.write(str(resNum))
+                            prog.close()
+
+        rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+
+    '''
+        Collects all the data
+    '''
+    def scrapeJob(self):
+        print("Scrapping Data")
+
+        # load search tree
+        # this is not the path I would expect to work
+        # apparently its relative to console.py
+        f = open("SearchTrees/all.json", "r")
+        craigslistTree = json.loads(f.read())
+        craigslistList = self.buildList(craigslistTree)
+        f.close()
+
+        # load progress
+        index = 0
+        if(os.path.isfile("progress.txt")):
+            f2 = open("progress.txt", "r")
+            index = int(f2.read())
+            f2.close()
+
+        # Scrapes data from craiglist
+        self.collectAll(craigslistList, index, 60, 20)

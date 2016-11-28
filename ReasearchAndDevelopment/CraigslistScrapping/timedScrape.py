@@ -28,7 +28,7 @@
             because craigslist has the least traffic at
             those times.
 
-        Add access to craigslist with storing
+        (DONE) Add access to craigslist with storing
             Now we can store the data because we know it works.
 
         Store the data with the extra link information
@@ -41,18 +41,6 @@ import pprint
 from util import *
 
 pp = pprint.PrettyPrinter(indent=4)
-bariRoot = "C:\Users\Gregory Venezia\Documents\BARI (Aspire Internship)"
-
-
-
-# search tree: for terms to scrape
-
-
-
-
-
-
-
 
 '''
     Restructure the search tree into
@@ -84,13 +72,18 @@ def buildList(tree, depth=0):
 
     return res
 
-#lst = buildList("tree")
-
-
-
+'''
+    A useful function for printing the
+    child.
+'''
 def printChild(child):
     print(str(child))
 
+
+'''
+    A useful function for printing the
+    parent.
+'''
 def printParent(parent):
     # remove children fields
     newParent = {}
@@ -111,27 +104,23 @@ def processChild(tree, parentFunc, childFunc):
         else:
             childFunc(child)
 
+'''
+    Scrapes craigslist data from a defined starting
+    location.
 
+    <============================================>
+    termList: the search terms
+    start: the starting index of the search terms
+    waitTime: time to wait in between scrapes
+    resCount: the number of results that are scrapped
+        before waiting.
 '''
-    Scrapes all the data from craigslist
-'''
-def scrapeData():
+def scrape(termList, start, waitTime, resCount):
     rec = open("record.txt", "a")
     rec.write("started scrapping" + datetime.datetime.now())
 
-    curCount = 0
-    count = 10 # the amount of results to scrape per cycle
-    waitTime = 60 # wait time between scrape batches
-
-
-    print("Scrapping Data")
-    f = open("modifiedTrees/all.json", "r")
-    craigslistTree = json.loads(f.read())
-    craigslistList = buildList(craigslistTree)
-
-    start = 0
-    for index in range(start, len(craigslistList)):
-        term = craigslistList[index]
+    for index in range(start, len(termList)):
+        term = termList[index]
 
         if("searchTerm" in term):
             print("Searched: " + term["parent"] + " " + term["searchTerm"])
@@ -143,14 +132,18 @@ def scrapeData():
             query = run_search(term["parent"], term["searchTerm"])
             results = query.get_results()
 
+            resNum = 0 # the result number
             for result in results:
-                print(result)
 
-                # ====> Interrupt at this point
+                # store the result
+                self.db[term["parent"]].insert_one(result)
+
+
+                resNum += 1
 
 
                 curCount += 1
-                if(curCount % 100 == 0):
+                if(curCount % resCount == 0):
                     time.sleep(waitTime)
 
                     # check the time.
@@ -158,10 +151,37 @@ def scrapeData():
                     # otherwise continue
                     currentTime = datetime.datetime.now()
                     if(currentTime.hour >= 9):
-                        print("Stopped time")
-                        f.write("ended scrapping" + datetime.datetime.now())
+                        #print("Stopped time")
+                        rec.write("ended scrapping" + datetime.datetime.now())
 
-    f.write("ended scrapping" + datetime.datetime.now())
+                        # save progress
+                        prog = open("progress.txt", "w")
+                        prog.write(index)
+                        prog.write(resNum)
+                        prog.close()
+
+    rec.write("ended scrapping" + datetime.datetime.now())
+
+
+'''
+    The scheduled job for scrapping craigslist
+'''
+def scrapeJob():
+    print("Scrapping Data")
+
+    # load search tree
+    f = open("modifiedTrees/all.json", "r")
+    craigslistTree = json.loads(f.read())
+    craigslistList = buildList(craigslistTree)
+    f.close()
+
+    # load progress
+    f2 = open("progress.txt", "r")
+    index = int(f2.read())
+    f2.close()
+
+    scrape(craigslistList, index, 60, 100)
+
 
 
 
