@@ -161,10 +161,10 @@ class CraigslistCollector(TreeCollector):
             before waiting.
     '''
     def collectAll(self, termList, start, waitTime, resCount):
-        print("Started Collection")
+        #print("Started Collection")
 
         rec = open("record.txt", "a")
-        rec.write("started scrapping" + str(datetime.datetime.now()) + "\n")
+        rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
 
         for index in range(start, len(termList)):
             term = termList[index]

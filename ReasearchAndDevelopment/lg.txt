@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "logToFile.py", line 11, in <module>
+    print(list[file]) # Used to create a NameError
+TypeError: 'type' object has no attribute '__getitem__'

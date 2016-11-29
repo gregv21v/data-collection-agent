@@ -16,6 +16,8 @@ from shell.dataSources.craigslistDataSource import *
 
 from shell.core.command import *
 
+import traceback
+
 
 print("Which source do you want to scrape from?")
 print("Type 'options' or 'o' to see what sources are available.")
@@ -28,13 +30,22 @@ if(choice == "options" or choice == "o"):
     print("Meetup (m)")
 elif(choice == "craigslist" or choice == "c"):
     #print("Craigslist ==> ")
-    dataSource = CraigslistDataSource()
-    dataSource.processCmd()
+    try:
+        dataSource = CraigslistDataSource()
+        dataSource.processCmd()
+    except:
+        traceback.print_exc("log.lg")
 elif(choice == "yelp" or choice == "y"):
     #print("Yelp: ")
-    dataSource = YelpDataSource()
-    dataSource.processCmd()
+    try:
+        dataSource = YelpDataSource()
+        dataSource.processCmd()
+    except:
+        traceback.print_exc("log.lg")
 elif(choice == "meetup" or choice == "m"):
     #print("Meetup: ")
-    dataSource = MeetupDataSource()
-    dataSource.processCmd()
+    try:
+        dataSource = MeetupDataSource()
+        dataSource.processCmd()
+    except:
+        traceback.print_exc("log.lg")
