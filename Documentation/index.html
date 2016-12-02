@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Startup Tutorial</title>
+  </head>
+  <body>
+    <h1>Tutorial</h1>
+
+    <h2>Setup</h2>
+    Install the following packages with pip.
+    <ul style="list-style: none">
+      <li><i>pip install beautifulsoup4</i></li>
+      <li><i>pip install schedule</i></li>
+      <li><i>pip install pymongo</i></li>
+    </ul><br>
+
+    Each scrapper requires it's own library. They are as follows:
+    <ul style="list-style: none">
+      <li><i>pip install python-craigslist</i></li>
+      <li><i>pip install meetup-api</i></li>
+      <li><i>pip install yelp</i></li>
+    </ul>
+
+    <h2>Running the console app</h2>
+    In the linux terminal, type <i>python console.py</i>
+    <h2>Example case of using the console with craigslist</h2>
+    <p>
+      When you enter the console, you will be prompted to choose
+      a database. To see a list of available data sources, type 'options'
+      or 'o'. This time without the quotes. These instructions will be
+      restated within the application. Each data source has can be abbrivated
+      to single letter, so if you type 'c', you get craigslist. Type 'c' now.
+    </p>
+    <p>
+      Once you have choosen your data source, you have a some commands available
+      for that data source. In this cause, you are going to want to use the command
+      <i>scheduleCollect</i>. The command <i>scheduleCollect</i> schedules the application
+      to start scrapping at a particular time of day. For example, </i>scheduleCollect "23:00"</i> would
+      start scrapping at 11am. Remember that the quotes must be included.
+    </p>
+    <p>
+      Side note: <i>sampleCollect</i>, and <i>sampleStore</i> will be quite useful when testing the collection
+      of data. <i>sampleCollect</i> displays a sample of the data collected from the database, and
+      <i>sampleStore</i> stores an example result to the default database.
+    </p>
+
+
+
+    <h3>Working commands (only craigslist right now)</h3>
+    <ul>
+      <li>scheduleCollect</li>
+      <li>sampleCollect</li>
+      <li>sampleStore</li>
+      <li>help</li>
+      <li>exit</li>
+    </ul>
+
+  </body>
+</html>

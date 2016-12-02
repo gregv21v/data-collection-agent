@@ -98,7 +98,7 @@ class CraigslistCollector(TreeCollector):
         Collects a single entry from the database
     '''
     def sample(self):
-        query = CraigslistCommunity(site="boston", category=subCategory)
+        query = CraigslistCommunity(site="boston", category="act")
         results = query.get_results(limit=1)
 
         for result in results:
