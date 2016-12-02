@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="collectorApp">
   <head>
     <meta charset="utf-8">
     <title></title>
+
+    <link rel="stylesheet" href="/bower_components/angular-json-tree/dist/angular-json-tree.css">
+    <script src="/bower_components/angular/angular.min.js" charset="utf-8"></script>
+    <script src="/bower_components/angular-json-tree/dist/angular-json-tree.min.js" charset="utf-8"></script>
+    <script src="/js/app.js" charset="utf-8"></script>
+
   </head>
-  <body>
-    Testing 1 2 3 ...
+  <body layout="row" layout-align="center center" ng-controller="MainCtrl">
+    <div style="border: 2px solid black">
+      <select ng-model="name">
+        <option value="craigslist">Craigslist</option>
+        <option value="yelp">Yelp</option>
+        <option value="meetup">Meetup</option>
+      </select><br>
+
+      <input type="checkbox" name="save" value="Save">Save</input><br>
+      <div style="border: 2px solid black">
+        <json-tree object="sample" start-expanded="true"></json-tree>
+      </div>
+
+    </div>
   </body>
 </html>

@@ -26,6 +26,24 @@ import time
 # to understand. I'm going to need to compartmentilize
 # things better.
 
+'''
+    Problems:
+        One of the major problems I have is that I don't get results from
+        my scrapping till the next day.
+
+'''
+'''
+    Questions:
+        What is the max and min time it takes to scrape all the days
+        results from craigslist?
+
+        If you start a query at 11:59pm, and scrape that query up beyond 12am
+        are you scrapping the results from the next day now?
+            Does craigslist update the query results when you change pages?
+
+
+'''
+
 
 
 
@@ -184,8 +202,8 @@ class CraigslistCollector(TreeCollector):
                 for result in results:
 
                     # store the result
-                    print(result)
-                    self.db[term["parent"]].insert_one({"result" : "result"})
+                    #print(result)
+                    self.db[term["parent"]].insert_one(result)
 
                     resNum += 1
 
@@ -199,7 +217,8 @@ class CraigslistCollector(TreeCollector):
                         # otherwise continue
                         currentTime = datetime.datetime.now()
                         if(currentTime.hour >= 9):
-                            #print("Stopped time")
+                            print("Paused scrapping for the day.")
+                            print("Scrapping will resume at 5pm tonight.")
                             rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
 
                             # save progress
@@ -212,6 +231,19 @@ class CraigslistCollector(TreeCollector):
 
     '''
         Collects all the data
+
+        NOTE: The current issue in scrapping craigslist now is that
+        it scrapes duplicates. One way to make sure that these duplicates
+        aren't added to the database is to check for them before adding them.
+
+        That doesn't solve the problem of scrapping those duplicates though,
+        which is still a problem. Lets say the scrapper scrapes x results night
+        1. It will scrape those results and only those results again the next
+        night if x is less than the total scrappable results from that particular
+        field.
+
+        Solving this problem would be easy if the craigslist api provide pagination
+        for it's results. I could implement it, but that wouldn't be idea.
     '''
     def scrapeJob(self):
         print("Scrapping Data")

@@ -70,8 +70,12 @@ class CraigslistDataSource(DataSource):
         and how to use them.
     '''
     def help(self):
-        print("sample --- displays a sample piece of data")
-        print("list --- lists all of the categories and subcategories")
-        print("collect [category] [subcategory] [\{additionalFields...\}]--- searches by subcategory")
-        print("help --- displays this menu")
-        print("scheduleCollect [time of day] --- collects data at a specific time of day")
+        print("help          --- displays this menu")
+        print("sampleCollect --- displays a sample piece of data")
+        print("sampleStore   --- stores a sample piece of data in the default database")
+        print("list          --- lists all of the categories and subcategories")
+        print("collect [category] [subcategory] [\{additionalFields...\}]")
+        print("              --- searches by subcategory")
+        print("scheduleCollect [time of day]")
+        print("              --- collects data at a specific time of day")
+        print("exit          --- exits the application")

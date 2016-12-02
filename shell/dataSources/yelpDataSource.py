@@ -46,5 +46,8 @@ class MeetupDataSource(DataSource):
 
     # Displays the help menu.
     def help(self):
-        print("sample --- collect a single result for looking at")
-        print("exit --- exits the application")
+        print("help          --- shows this menu")
+        print("sampleStore   --- store a single piece of data in the default database")
+        print("sampleCollect --- collect a single piece of data and display it")
+        print("list          --- lists all the categories and subcategories")
+        print("exit          --- exits the application")
