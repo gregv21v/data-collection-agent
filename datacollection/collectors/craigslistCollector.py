@@ -169,6 +169,32 @@ class CraigslistCollector(TreeCollector):
 
         return resArray
 
+
+
+
+    '''
+
+    '''
+    def collectOld(self, progress):
+        # Divide the region into concentric
+        # circles.
+        index = 0
+        for term in progress:
+            query = run_search(term["parent"], term["searchTerm"], filters={
+                "search_distance" : 5 + index,
+                "postal" : 02110
+            })
+            results = query.get_results()
+
+            # add each result to the database
+            for result in results:
+                self.db[term["parent"]].insert_one(result)
+
+                # if time is up save the progress to the database
+
+            raw_input("Press enter to continue ...")
+            index += 1
+
     '''
         Collect all data
         ==================================================
@@ -203,7 +229,8 @@ class CraigslistCollector(TreeCollector):
 
                     # store the result
                     #print(result)
-                    self.db[term["parent"]].insert_one(result)
+                    if(not self.db[term["parent"]].find({"id" : result["id"]}).count() > 0):
+                        self.db[term["parent"]].insert_one(result)
 
                     resNum += 1
 
@@ -228,6 +255,10 @@ class CraigslistCollector(TreeCollector):
                             prog.close()
 
         rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+
+
+
+
 
     '''
         Collects all the data

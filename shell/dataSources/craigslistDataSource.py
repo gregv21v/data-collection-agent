@@ -9,6 +9,7 @@ from dataSource import *
 from shell.core.command import *
 import schedule
 import time
+import json
 
 class CraigslistDataSource(DataSource):
 
@@ -41,7 +42,17 @@ class CraigslistDataSource(DataSource):
                 elif(cmd.name == "sampleCollect"): # sample shows a quick little example
                     self.collector.sample()
                 elif(cmd.name == "sampleStore"):
+                    # collects a sample of data and stores it in the database.
                     self.collector.sampleStore()
+                elif(cmd.name == "scrapeOld"):
+                    # Scrapes old data that has not been scrapped
+                    # yet starting from the beginning.
+                    f = open("SearchTrees/all.json", "r")
+                    tree = json.loads(f.read())
+
+                    lst = self.collector.buildList(tree)
+                    self.collector.collectOld(lst)
+
                 elif(cmd.name == "scheduleCollect"):
                     timeOfDay = cmd.parameters[0]
                     schedule.every().day.at(timeOfDay).do(self.collector.scrapeJob)
@@ -49,7 +60,11 @@ class CraigslistDataSource(DataSource):
                         schedule.run_pending()
                         time.sleep(1)
                 elif(cmd.name == "list"):
-                    print("List all the categories and subcategories available.")
+                    # load the categories and subcategories file
+                    f = open("SearchTrees/all.json", "r")
+                    tree = json.loads(f.read())
+
+                    self.listCategories(tree)
                     # GUI NOTE:
                     # This would be nicer to see in a GUI because everything
                     # would be visible all at once. You would be able to see all
@@ -73,9 +88,24 @@ class CraigslistDataSource(DataSource):
         print("help          --- displays this menu")
         print("sampleCollect --- displays a sample piece of data")
         print("sampleStore   --- stores a sample piece of data in the default database")
+        print("collectOld    --- collects data that has not been collected yet")
         print("list          --- lists all of the categories and subcategories")
         print("collect [category] [subcategory] [\{additionalFields...\}]")
         print("              --- searches by subcategory")
         print("scheduleCollect [time of day]")
         print("              --- collects data at a specific time of day")
         print("exit          --- exits the application")
+
+
+    '''
+        List all the categories and
+        subcategories by search term.
+    '''
+    def listCategories(self, tree, depth=0):
+        for child in tree["children"]:
+            newChild = child
+            if("children" in child): # child has children
+                print((" " * depth) + newChild["name"])
+                self.listCategories(newChild, depth+1)
+            else:
+                print((" " * depth) + newChild["searchTerm"])
