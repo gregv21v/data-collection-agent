@@ -32,7 +32,8 @@ def sample():
     name = request.args.get('name')
 
     if(name == "craigslist"):
-        return flask.jsonify(craigslistCollector.sample())
+        return json.dumps(craigslistCollector.sample())
+        #return flask.jsonify(craigslistCollector.sample())
     else:
         return json.dumps({})
 

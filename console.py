@@ -22,30 +22,35 @@ import traceback
 print("Which source do you want to scrape from?")
 print("Type 'options' or 'o' to see what sources are available.")
 
-choice = raw_input(">")
+exited = False
+while(not exited):
+    choice = raw_input(">")
 
-if(choice == "options" or choice == "o"):
-    print("Craigslist (c)")
-    print("Yelp (y)")
-    print("Meetup (m)")
-elif(choice == "craigslist" or choice == "c"):
-    #print("Craigslist ==> ")
-    try:
-        dataSource = CraigslistDataSource()
-        dataSource.processCmd()
-    except:
-        traceback.print_exc("log.lg")
-elif(choice == "yelp" or choice == "y"):
-    #print("Yelp: ")
-    try:
-        dataSource = YelpDataSource()
-        dataSource.processCmd()
-    except:
-        traceback.print_exc("log.lg")
-elif(choice == "meetup" or choice == "m"):
-    #print("Meetup: ")
-    try:
-        dataSource = MeetupDataSource()
-        dataSource.processCmd()
-    except:
-        traceback.print_exc("log.lg")
+    if(choice == "options" or choice == "o"):
+        print("Craigslist (c)")
+        print("Yelp (y)")
+        print("Meetup (m)")
+    elif(choice == "craigslist" or choice == "c"):
+        #print("Craigslist ==> ")
+        try:
+            dataSource = CraigslistDataSource()
+            dataSource.processCmd()
+            exited = True
+        except:
+            traceback.print_exc("log.lg")
+    elif(choice == "yelp" or choice == "y"):
+        #print("Yelp: ")
+        try:
+            dataSource = YelpDataSource()
+            dataSource.processCmd()
+            exited = True
+        except:
+            traceback.print_exc("log.lg")
+    elif(choice == "meetup" or choice == "m"):
+        #print("Meetup: ")
+        try:
+            dataSource = MeetupDataSource()
+            dataSource.processCmd()
+            exited = True
+        except:
+            traceback.print_exc("log.lg")

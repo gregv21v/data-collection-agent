@@ -38,7 +38,7 @@ class CraigslistDataSource(DataSource):
                     else:
                         self.collector.collectByCategory(category, subcategory, fields=params)
                 elif(cmd.name == "sampleCollect"): # sample shows a quick little example
-                    self.collector.sample()
+                    print(self.collector.sample())
                 elif(cmd.name == "sampleStore"):
                     # collects a sample of data and stores it in the database.
                     self.collector.sampleStore()
