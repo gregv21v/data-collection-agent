@@ -102,7 +102,7 @@ class CraigslistCollector(TreeCollector):
         results = query.get_results(limit=1)
 
         for result in results:
-            print(result)
+            return result
 
     '''
         Collects a single entry from craigslist

@@ -2,8 +2,6 @@
     A data source is process
     commands and operates on data
 '''
-
-
 from datacollection.collectors.craigslistCollector import *
 from dataSource import *
 from shell.core.command import *
