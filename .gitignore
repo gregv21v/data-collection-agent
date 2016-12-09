@@ -1,2 +1,3 @@
 credentials/*
+interface/bower_components/*
 *.pyc

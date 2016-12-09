@@ -13,7 +13,14 @@ app.factory("Data", function($http) {
 
 
 app.controller("MainCtrl", ['Data', '$scope', function(Data, $scope) {
-
+  $scope.sample = {
+    d: 1,
+    c: 1,
+    r: {
+      j: 1,
+      k: 'a'
+    }
+  }
 
   $scope.$watch('name', function(newValue, oldValue) {
     if(newValue != oldValue) {

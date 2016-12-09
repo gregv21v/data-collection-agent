@@ -159,7 +159,7 @@ class CraigslistCollector(TreeCollector):
                 elif(field == "body"):
                     post.retrieveBody()
                 elif(field == "imageUrls"):
-                    post.retieveImageUrls()
+                    post.retrieveImageUrls()
 
             if(stored):
                 self.db[category].insert_one(post.data)
@@ -173,6 +173,8 @@ class CraigslistCollector(TreeCollector):
 
 
     '''
+        Scrappes the results that have not been scraped
+        yet from today.
 
     '''
     def collectOld(self, progress):
@@ -195,6 +197,82 @@ class CraigslistCollector(TreeCollector):
             raw_input("Press enter to continue ...")
             index += 1
 
+
+    '''
+        Collect todays data
+        ============================================
+        termList: the list of search terms
+        start: where in the termList to start scrapping
+        waitTime: the amount of time to wait between scrapes
+        resCount: the amount of results to scrape before pausing
+        deeper: whether to scrape the actual postings as well
+    '''
+    def collectToday(self, termList, start, waitTime, resCount, deeper=True):
+        rec = open("record.txt", "a")
+        rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
+
+        for index in range(start, len(termList)):
+            term = termList[index]
+
+            if("searchTerm" in term):
+                print("Searched: " + term["parent"] + " " + term["searchTerm"])
+
+                # ====> Interrupt at this point
+                # ====> This interrupt allows the program to
+                #       only run at certain times.
+
+                query = run_search(term["parent"], term["searchTerm"], filters={
+                    "posted_Today" : True
+                })
+                results = query.get_results()
+
+                resNum = 0 # the result number
+                curCount = 0
+                for result in results:
+
+                    data = result # temperary buffer for current result
+
+                    # add additional fields
+                    if(deeper):
+                        post = CraigslistPost(result)
+                        post.retrieveAttrs()
+                        post.retrieveNotices()
+                        post.retrieveBody()
+                        #post.retrieveImageUrls()
+
+                        data = post.data
+
+                    # store the result
+                    #print(result)
+                    if(not self.db[term["parent"]].find({"id" : data["id"]}).count() > 0):
+                        self.db[term["parent"]].insert_one(data)
+
+                    resNum += 1
+                    curCount += 1
+                    if(curCount % resCount == 0):
+                        time.sleep(waitTime)
+
+                        # check the time.
+                        # if the time is 9am stop scrapping,
+                        # otherwise continue
+                        currentTime = datetime.datetime.now()
+                        if(currentTime.hour >= 9):
+                            print("Paused scrapping for the day.")
+                            print("Scrapping will resume at 5pm tonight.")
+                            rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+
+                            # save progress
+                            prog = open("progress.txt", "w")
+                            #prog.write(str(index))
+                            prog.write(str(resNum))
+                            prog.close()
+
+        rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+        pass
+
+
+
+
     '''
         Collect all data
         ==================================================
@@ -203,8 +281,9 @@ class CraigslistCollector(TreeCollector):
         waitTime: time to wait in between scrapes
         resCount: the number of results that are scrapped
             before waiting.
+        deeper: whether to scrape the actual postings as well
     '''
-    def collectAll(self, termList, start, waitTime, resCount):
+    def collectAll(self, termList, start, waitTime, resCount, deeper=True):
         #print("Started Collection")
 
         rec = open("record.txt", "a")
@@ -227,10 +306,22 @@ class CraigslistCollector(TreeCollector):
                 curCount = 0
                 for result in results:
 
+                    data = result # temperary buffer for current result
+
+                    # add additional fields
+                    if(deeper):
+                        post = CraigslistPost(result)
+                        post.retrieveAttrs()
+                        post.retrieveNotices()
+                        post.retrieveBody()
+                        #post.retrieveImageUrls()
+
+                        data = post.data
+
                     # store the result
                     #print(result)
-                    if(not self.db[term["parent"]].find({"id" : result["id"]}).count() > 0):
-                        self.db[term["parent"]].insert_one(result)
+                    if(not self.db[term["parent"]].find({"id" : data["id"]}).count() > 0):
+                        self.db[term["parent"]].insert_one(data)
 
                     resNum += 1
 

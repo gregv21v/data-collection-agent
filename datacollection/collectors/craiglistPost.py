@@ -74,7 +74,7 @@ class CraigslistPost:
 
     # Gets the image urls from the
     # posting
-    def retieveImageUrls():
+    def retrieveImageUrls(self):
         if(self.soup == None):
             response = requests_get(self.data["url"])
             self.soup = BeautifulSoup(response.content, 'html.parser')
