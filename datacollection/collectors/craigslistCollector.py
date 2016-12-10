@@ -386,4 +386,5 @@ class CraigslistCollector(TreeCollector):
             f2.close()
 
         # Scrapes data from craiglist
-        self.collectAll(craigslistList, index, 60, 20)
+        # params: termList, start, waitTime, resCount, deeper=True
+        self.collectAll(craigslistList, index, 0, 20)

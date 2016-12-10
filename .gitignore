@@ -1,3 +1,4 @@
 credentials/*
 interface/bower_components/*
+*.txt
 *.pyc
