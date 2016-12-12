@@ -256,9 +256,9 @@ class CraigslistCollector(TreeCollector):
                         # if the time is 9am stop scrapping,
                         # otherwise continue
                         currentTime = datetime.datetime.now()
-                        if(currentTime.hour >= 9):
+                        if(currentTime.hour >= 14):
                             print("Paused scrapping for the day.")
-                            print("Scrapping will resume at 5pm tonight.")
+                            print("Scrapping will resume again the same time it was started.")
                             rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
 
                             # save progress
