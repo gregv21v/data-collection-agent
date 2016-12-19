@@ -1,0 +1,52 @@
+{
+  "name": "angular-list-group",
+  "version": "0.0.3",
+  "homepage": "https://github.com/gnavarro77/angular-list-group",
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "list group"
+  ],
+  "author": {
+    "name": "Gilles Navarro",
+    "url": "https://github.com/gnavarro77"
+  },
+  "description": "AngularListGroup - AngularJS directives based upon and around Bootstrap list group",
+  "main": [
+    "dist/angular-list-group.min.js",
+    "dist/angular-list-group.css"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "bower.json",
+    "package.json",
+    "gruntfile.js",
+    "karma.conf.js",
+    "README.md",
+    "demo",
+    ".gitignore"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.1",
+    "angular-sanitize": ">=1.3.1"
+  },
+  "devDependencies": {
+    "angular-mocks": ">=1.3.1",
+    "jquery": "~2.1.3"
+  },
+  "_release": "0.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.3",
+    "commit": "06b02cb6151d1f5606ca3c6459eef88e959f98e9"
+  },
+  "_source": "https://github.com/gnavarro77/angular-list-group.git",
+  "_target": "^0.0.3",
+  "_originalSource": "angular-list-group",
+  "_direct": true
+}

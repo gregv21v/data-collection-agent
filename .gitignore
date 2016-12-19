@@ -1,5 +1,3 @@
 credentials/*
-interface/static/bower_components/*
 *.txt
 *.pyc
-interface/static/bower_components/angular/.bower.json
