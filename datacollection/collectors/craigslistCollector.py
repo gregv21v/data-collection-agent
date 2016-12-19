@@ -7,6 +7,8 @@ import os
 import json
 import datetime
 import time
+import schedule
+
 
 
 
@@ -61,10 +63,6 @@ class CraigslistCollector(TreeCollector):
         self.db = self.mongoClient.get_default_database()
         #self.db["test"].insert_one({"a": 0})
 
-
-
-
-
     '''
         Convert the original search tree into a list.
 
@@ -96,13 +94,27 @@ class CraigslistCollector(TreeCollector):
 
     '''
         Collects a single entry from the database
+        =============================================
+        fields: the fields not present in the
     '''
-    def sample(self):
+    def sample(self, fields=["attrs", "notices", "body", "imageUrls"]):
         query = CraigslistCommunity(site="boston", category="act")
-        results = query.get_results(limit=1)
+        results = query.get_results(limit=1, geotagged=True)
 
         for result in results:
-            return result
+
+            post = CraigslistPost(result)
+            for field in fields:
+                if(field == "attrs"):
+                    post.retrieveAttrs()
+                elif(field == "notices"):
+                    post.retrieveNotices()
+                elif(field == "body"):
+                    post.retrieveBody()
+                elif(field == "imageUrls"):
+                    post.retrieveImageUrls()
+
+            return post.data
 
     '''
         Collects a single entry from craigslist
@@ -139,7 +151,7 @@ class CraigslistCollector(TreeCollector):
         print("Collecting by category")
         query = run_search(category, subcategory)
         #run_search(category, subCategory, filters={})
-        results = query.get_results(geoTagged=geoTagged)
+        results = query.get_results(geotagged=geoTagged)
 
 
         #print("Results: " + str(results.__dict__))
@@ -168,8 +180,6 @@ class CraigslistCollector(TreeCollector):
             resArray.append(result)
 
         return resArray
-
-
 
 
     '''
@@ -203,11 +213,11 @@ class CraigslistCollector(TreeCollector):
         ============================================
         termList: the list of search terms
         start: where in the termList to start scrapping
-        waitTime: the amount of time to wait between scrapes
+        pause: the amount of time to wait between scrapes
         resCount: the amount of results to scrape before pausing
         deeper: whether to scrape the actual postings as well
     '''
-    def collectToday(self, termList, start, waitTime, resCount, deeper=True):
+    def collectToday(self, termList, start, pause, resCount, deeper=True):
         rec = open("record.txt", "a")
         rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
 
@@ -256,9 +266,14 @@ class CraigslistCollector(TreeCollector):
                         # if the time is 9am stop scrapping,
                         # otherwise continue
                         currentTime = datetime.datetime.now()
-                        if(currentTime.hour >= 14):
+                        todayAtHour = currentTime.replace(
+                            hour=int(self.endTime[:2]),
+                            minute=int(self.endTime[3:5]),
+                            second=0, microsecond=0
+                        )
+                        if(currentTime >= todayAtHour):
                             print("Paused scrapping for the day.")
-                            print("Scrapping will resume again the same time it was started.")
+                            print("Scrapping will resume again at " + self.endTime)
                             rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
 
                             # save progress
@@ -268,7 +283,6 @@ class CraigslistCollector(TreeCollector):
                             prog.close()
 
         rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
-        pass
 
 
 
@@ -286,6 +300,8 @@ class CraigslistCollector(TreeCollector):
     def collectAll(self, termList, start, waitTime, resCount, deeper=True):
         #print("Started Collection")
 
+
+        last = open("last.txt", "w") # information about the last record scrapped
         rec = open("record.txt", "a")
         rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
 
@@ -307,6 +323,7 @@ class CraigslistCollector(TreeCollector):
                 for result in results:
 
                     data = result # temperary buffer for current result
+                    last.write(data["id"])
 
                     # add additional fields
                     if(deeper):
@@ -334,10 +351,15 @@ class CraigslistCollector(TreeCollector):
                         # if the time is 9am stop scrapping,
                         # otherwise continue
                         currentTime = datetime.datetime.now()
-                        if(currentTime.hour >= 9):
+                        todayAtHour = currentTime.replace(
+                            hour=int(self.endTime[:2]),
+                            minute=int(self.endTime[3:5]),
+                            second=0, microsecond=0
+                        )
+                        if(currentTime >= todayAtHour):
                             print("Paused scrapping for the day.")
                             print("Scrapping will resume at 5pm tonight.")
-                            rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
+                            rec.write("paused scrapping" + str(datetime.datetime.now()) + "\n")
 
                             # save progress
                             prog = open("progress.txt", "w")
@@ -346,9 +368,8 @@ class CraigslistCollector(TreeCollector):
                             prog.close()
 
         rec.write("ended scrapping" + str(datetime.datetime.now()) + "\n")
-
-
-
+        rec.close()
+        last.close()
 
 
     '''
@@ -388,3 +409,17 @@ class CraigslistCollector(TreeCollector):
         # Scrapes data from craiglist
         # params: termList, start, waitTime, resCount, deeper=True
         self.collectAll(craigslistList, index, 0, 20)
+
+
+    '''
+        Schedules a scrapping activity
+        ========================================
+        startTime: time of day to start scrapping
+        endTime: hour of day to end scrapping
+    '''
+    def scheduleScrape(self, startTime, endTime):
+        self.endTime = endTime
+        schedule.every().day.at(startTime).do(self.scrapeJob)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
