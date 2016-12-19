@@ -4,28 +4,73 @@
     <meta charset="utf-8">
     <title></title>
 
+    <script src="/bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+
+    <!-- Bootstrap -->
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+
+    <!-- Angular -->
     <link rel="stylesheet" href="/bower_components/angular-json-tree/dist/angular-json-tree.css">
     <script src="/bower_components/angular/angular.min.js" charset="utf-8"></script>
     <script src="/bower_components/angular-json-tree/dist/angular-json-tree.min.js" charset="utf-8"></script>
+
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.3.1.js"></script>
+
+    <!-- List Group -->
+    <link rel="stylesheet" href="/bower_components/angular-list-group/dist/angular-list-group.css">
+    <script src="/bower_components/angular-list-group/dist/angular-list-group.min.js" charset="utf-8"></script>
+
+    <!-- Sanitize -->
+    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js" charset="utf-8"></script>
+
     <script src="/js/app.js" charset="utf-8"></script>
+
+    <style media="screen">
+      input {
+        width: 25px
+      }
+    </style>
 
   </head>
   <body layout="row" layout-align="center center" ng-controller="MainCtrl">
-    <div style="border: 2px solid black">
+    <div class="well">
       Website: <select ng-model="name">
         <option value="craigslist">Craigslist</option>
         <option value="yelp">Yelp</option>
         <option value="meetup">Meetup</option>
       </select><br>
 
-      Start Time: <input type="text" ng-model="startTime" value=""><br>
-      End Time: <input type="text" ng-model="endTime" value="">
+      <!-- Additional Fields -->
+      <!-- TODO: Check mark for additional fields -->
 
-      <input type="checkbox" name="save" value="Save">Save</input><br>
-      <div style="border: 2px solid black">
-        <json-tree object="sample" start-expanded="true"></json-tree>
-      </div>
+
+      Start: m<input type="text" ng-model="startTime.minutes">:h<input type="text" ng-model="startTime.seconds">
+      End: m<input type="text" ng-model="endTime.minutes">:h<input type="text" ng-model="endTime.seconds">
+
+      <button type="button" class="btn btn-primary" ng-model="singleModel" ng-click="schedule()">
+        Schedule
+      </button><br>
+
+      <p>{{sampleInfo}}</p>
+      <json-tree object="sample" start-expanded="true"></json-tree>
+
 
     </div>
+
+    <!--
+      TODO:
+      To be implemented: comment out for now because it involves making the
+      console application have multiple threads, which I'm not ready to do
+      yet.
+    -->
+    <!--
+    <div class="well">
+      <h2>Scheduled Scrapes</h2>
+      <list-group items="scheduledScrapes" template="scheduleItemTpt" />
+    </div>
+    -->
   </body>
 </html>

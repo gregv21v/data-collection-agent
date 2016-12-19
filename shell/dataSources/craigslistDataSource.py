@@ -52,12 +52,12 @@ class CraigslistDataSource(DataSource):
                 self.collector.collectOld(lst)
 
             elif(cmd.name == "scheduleCollect"):
-                timeOfDay = cmd.parameters[0]
+                startTime = cmd.parameters[0]
+                endTime = cmd.parameters[1]
                 cmd = Command("")
-                schedule.every().day.at(timeOfDay).do(self.collector.scrapeJob)
-                while True:
-                    schedule.run_pending()
-                    time.sleep(1)
+                # first parameter is a string, and the second is an
+                # integer
+                self.collector.scheduleScrape(startTime, endTime)
             elif(cmd.name == "list"):
                 # load the categories and subcategories file
                 f = open("SearchTrees/all.json", "r")

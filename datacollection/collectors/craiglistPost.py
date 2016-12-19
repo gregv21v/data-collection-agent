@@ -6,15 +6,19 @@ import bs4
 
 class CraigslistPost:
 
-    # Data is the original data from
-    # the dataset.
+    '''
+        Data is the original data from
+        the dataset.
+    '''
     def __init__(self, data):
-        self.data = data
+        self.data = data # object that contains all the information about the post
         self.soup = None
 
 
-    # Retrieve the attributes of
-    # the post from craigslist.
+    '''
+        Retrieve the attributes of
+        the post from craigslist.
+    '''
     def retrieveAttrs(self):
         if(self.soup == None):
             response = requests_get(self.data["url"])
@@ -45,8 +49,10 @@ class CraigslistPost:
 
         return attrs
 
-    # Retrieve the post body
-    # from craigslist
+    '''
+        Retrieve the post body
+        from craigslist.
+    '''
     def retrieveBody(self):
         if(self.soup == None):
             response = requests_get(self.data["url"])
@@ -56,7 +62,9 @@ class CraigslistPost:
 
         return self.data["body"]
 
-    # get the posting notices
+    '''
+        get the posting notices
+    '''
     def retrieveNotices(self):
         if(self.soup == None):
             response = requests_get(self.data["url"])
@@ -72,8 +80,10 @@ class CraigslistPost:
 
         return notices
 
-    # Gets the image urls from the
-    # posting
+    '''
+        Gets the image urls from the
+        posting
+    '''
     def retrieveImageUrls(self):
         if(self.soup == None):
             response = requests_get(self.data["url"])
