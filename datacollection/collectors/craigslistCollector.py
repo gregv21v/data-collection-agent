@@ -325,8 +325,11 @@ class CraigslistCollector(TreeCollector):
                     data = result # temperary buffer for current result
                     last.write(data["id"])
 
+                    # Checks to see if the record is already present in the db
+                    recordPresent = self.db[term["parent"]].find({"id" : data["id"]}).count() > 0
+
                     # add additional fields
-                    if(deeper):
+                    if(deeper and not recordPresent):
                         post = CraigslistPost(result)
                         post.retrieveAttrs()
                         post.retrieveNotices()
@@ -337,7 +340,7 @@ class CraigslistCollector(TreeCollector):
 
                     # store the result
                     #print(result)
-                    if(not self.db[term["parent"]].find({"id" : data["id"]}).count() > 0):
+                    if(not recordPresent):
                         self.db[term["parent"]].insert_one(data)
 
                     resNum += 1
