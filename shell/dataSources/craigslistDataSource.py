@@ -48,8 +48,9 @@ class CraigslistDataSource(DataSource):
                 f = open("SearchTrees/all.json", "r")
                 tree = json.loads(f.read())
 
+                self.collector.endTime = "02:00"
                 lst = self.collector.buildList(tree)
-                self.collector.collectOld(lst)
+                self.collector.scrapeByGrid(lst)
 
             elif(cmd.name == "scheduleCollect"):
                 startTime = cmd.parameters[0]
@@ -91,11 +92,12 @@ class CraigslistDataSource(DataSource):
         print("sampleCollect --- displays a sample piece of data")
         print("sampleStore   --- stores a sample piece of data in the default database")
         print("collectOld    --- collects data that has not been collected yet")
+        print("collectToday  --- collects the data for today")
         print("list          --- lists all of the categories and subcategories")
         print("collect [category] [subcategory] [\{additionalFields...\}]")
         print("              --- searches by subcategory")
-        print("scheduleCollect [time of day]")
-        print("              --- collects data at a specific time of day")
+        print("scheduleCollect [start time] [end time]")
+        print("              --- collects data at a specific time of day every day")
         print("exit          --- exits the application")
 
 

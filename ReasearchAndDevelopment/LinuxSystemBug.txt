@@ -1,0 +1,14 @@
+There is a bug that is preventing me from using the console application
+scheduleCollect on the linux server.
+
+Differences
+Linux             Windows
+---------------------------------
+Python 2.7.12     Python 2.7.10
+schedule 0.4.2    schedule 0.3.2
+
+
+Does schedule 0.3.2 work with python 2.7.12?
+
+
+-- (Linux) Updating from schedule 0.3.2 to 0.4.2 doesn't make a difference
