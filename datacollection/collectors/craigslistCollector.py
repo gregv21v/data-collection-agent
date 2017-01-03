@@ -3,7 +3,10 @@ from craiglistPost import *
 from treeCollector import *
 from datacollection.util.util import *
 from pymongo import MongoClient
+from craigslist import *
+
 import os
+import os.path
 import json
 import datetime
 import time
@@ -11,30 +14,18 @@ import schedule
 
 
 
+# modify the base filter for craigslist such that you can now search by
+# search distance in all situations.
+CraigslistBase.base_filters['search_distance'] = {'url_key': 'search_distance', 'value': None}
+CraigslistBase.base_filters['postal'] = {'url_key': 'postal', 'value': None}
 
-
-
-# TODO: Construct the craigslist class
-# TODO: Transfer over the data tree
-
-# NOTE: This is going to take a long time.
-# I'm going to have to restructure everything
-# that I did, so it likely won't be done today.
-# Most of the work is actually pretty streight
-# forward it's just very time consuming.
-
-# The project has gotten pretty large,
-# so it's going to be more and more difficult
-# to understand. I'm going to need to compartmentilize
-# things better.
 
 '''
     Problems:
         One of the major problems I have is that I don't get results from
         my scrapping till the next day.
 
-'''
-'''
+
     Questions:
         What is the max and min time it takes to scrape all the days
         results from craigslist?
@@ -183,11 +174,97 @@ class CraigslistCollector(TreeCollector):
 
 
     '''
+        TODO: display this on a map so we see that we are covering the
+        whole area of Boston.
+
+
+        TEST: does it save progress and resume the next day
+
+    '''
+    def scrapeByGrid(self, progress, deeper=True):
+
+        # load the list of zip codes
+        f = open("data/bostonZipCodes.txt", "r")
+        codes = f.read().split("\n")
+        f.close()
+
+        lastZip = 0
+        if(os.path.exists("data/progress/lastZip.txt")):
+            f2 = open("data/progress/lastZip.txt", "r")
+            lastZip = int(f2.read())
+            f2.close()
+
+        # tree containing all the progress to made in scrapping so
+        # far. It's a modification of the all.json searchtree.
+        progressTree = progress
+        if(os.path.exists("data/progress/trees/all.json")):
+            treeFile = open("data/progress/trees/all.json", "r")
+            progressTree = treeFile.read()
+            treeFile.close()
+
+        print(codes)
+
+        for term in progress:
+            for codeIndex in range(0, len(codes)):
+                # run a search on that zip codes
+                query = run_search(term["parent"], term["searchTerm"], filters={
+                    "search_distance" : 36, # this is the max distance from the center of Dorchester,
+                                            # the largest city in Boston
+                    "postal" : codes[codeIndex]
+                })
+
+                results = query.get_results()
+
+                for result in results:
+
+                    data = result # temperary buffer for current result
+
+                    # Checks to see if the record is already present in the db
+                    recordPresent = self.db[term["parent"]].find({"id" : data["id"]}).count() > 0
+
+                    # add additional fields
+                    if(deeper and not recordPresent):
+                        post = CraigslistPost(result)
+                        post.retrieveAttrs()
+                        post.retrieveNotices()
+                        post.retrieveBody()
+                        #post.retrieveImageUrls()
+
+                        data = post.data
+
+                    # store the result
+                    if(not recordPresent):
+                        self.db[term["parent"]].insert_one(data)
+
+
+                    # if the scrapper is scheduled to stop,
+                    # save the last zip code
+                    currentTime = datetime.datetime.now()
+                    todayAtHour = currentTime.replace(
+                        hour=int(self.endTime[:2]),
+                        minute=int(self.endTime[3:5]),
+                        second=0, microsecond=0
+                    )
+                    if(currentTime >= todayAtHour):
+                        f2 = open("data/progress/lastZip.txt", "w")
+                        f2.write(codes[codeIndex])
+                        f2.close()
+
+
+
+
+
+
+
+
+    '''
         Scrappes the results that have not been scraped
         yet from today.
 
     '''
-    def collectOld(self, progress):
+    def collectConcentricCircles(self, progress):
+
+
         # Divide the region into concentric
         # circles.
         index = 0
@@ -197,6 +274,8 @@ class CraigslistCollector(TreeCollector):
                 "postal" : 02110
             })
             results = query.get_results()
+
+
 
             # add each result to the database
             for result in results:
@@ -218,7 +297,7 @@ class CraigslistCollector(TreeCollector):
         deeper: whether to scrape the actual postings as well
     '''
     def collectToday(self, termList, start, pause, resCount, deeper=True):
-        rec = open("record.txt", "a")
+        rec = open("data/progress/record.txt", "a")
         rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
 
         for index in range(start, len(termList)):
@@ -301,8 +380,8 @@ class CraigslistCollector(TreeCollector):
         #print("Started Collection")
 
 
-        last = open("last.txt", "w") # information about the last record scrapped
-        rec = open("record.txt", "a")
+        last = open("data/progress/lastRecord.txt", "w") # information about the last record scrapped
+        rec = open("data/progress/record.txt", "a")
         rec.write("started scrapping " + str(datetime.datetime.now()) + "\n")
 
         for index in range(start, len(termList)):
@@ -365,7 +444,7 @@ class CraigslistCollector(TreeCollector):
                             rec.write("paused scrapping" + str(datetime.datetime.now()) + "\n")
 
                             # save progress
-                            prog = open("progress.txt", "w")
+                            prog = open("data/progress/progress.txt", "w")
                             #prog.write(str(index))
                             prog.write(str(resNum))
                             prog.close()
@@ -397,21 +476,22 @@ class CraigslistCollector(TreeCollector):
         # load search tree
         # this is not the path I would expect to work
         # apparently its relative to console.py
-        f = open("SearchTrees/all.json", "r")
+        f = open("data/searchTrees/all.json", "r")
         craigslistTree = json.loads(f.read())
         craigslistList = self.buildList(craigslistTree)
         f.close()
 
         # load progress
         index = 0
-        if(os.path.isfile("progress.txt")):
-            f2 = open("progress.txt", "r")
+        if(os.path.isfile("data/searchTrees/progress.txt")):
+            f2 = open("data/searchTrees/progress.txt", "r")
             index = int(f2.read())
             f2.close()
 
         # Scrapes data from craiglist
         # params: termList, start, waitTime, resCount, deeper=True
-        self.collectAll(craigslistList, index, 0, 20)
+        #self.scrapeToday(craiglistList, index, 0, 20)
+        self.scrapeByGrid(craigslistList)
 
 
     '''
