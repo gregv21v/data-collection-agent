@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h3>Using Scrapyd with this project</h3>
+
+    <ul>
+      <li>
+        <h3>How do you add a job to the scrapyd server?</h3>
+
+      </li>
+    </ul>
+
+    <!-- List of commands -->
+    <!--
+      Add a spider to the project
+      curl http://localhost:6800/schedule.json -d project=default -d spider=somespider
+
+      Since windows does not directly allow you to use scrapyd-deploy from the getgo,
+      you have to use the absolute path to it. C:\Python27\Scripts
+
+      
+    -->
+
+
+
+
+
+
+    <h3>Installing Scrapy</h3>
+
+    <p>
+      You can install scrappy from <a href="http://scrapyd.readthedocs.io/en/stable/install.html">here</a>.
+    </p>
+
+    <h3>If you experience any errors, these instructions might help</h3>
+    <p>
+      I had to additionally install a few packages to successfully install scrapyd on my system. The difficulties
+      you have may be different depending on your system. If you do encounter the same errors, here is how I resolved
+      them on my system.
+    </p>
+    <p>
+      First, I had an error related to Visual Studios, and I resolved it by installing <a href="https://www.microsoft.com/en-us/download/details.aspx?id=44266">this</a>.
+    </p>
+    <p>
+      libxml2 wasn't installed for me, so I had to install it. Here is a short post that will explain how. It's not
+      directly available through pip.
+      <a href="http://stackoverflow.com/questions/33785755/getting-could-not-find-function-xmlcheckversion-in-library-libxml2-is-libxml2">here</a>.
+    </p>
+
+    <p>
+      You might actually find out later down the line that you need the python win32api package. You can get that
+      <a href="http://stackoverflow.com/questions/3580855/where-to-find-the-win32api-module-for-python">here</a>.
+
+      Then again, you might need to install pywin for the server to work with a spider properly. You can get the
+      build <a href="https://sourceforge.net/projects/pywin32/files/pywin32/Build%20220/">here</a>.
+    </p>
+
+  </body>
+</html>

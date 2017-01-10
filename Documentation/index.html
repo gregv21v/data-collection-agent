@@ -36,9 +36,10 @@
       Once you have choosen your data source, you have a some commands available
       for that data source. In this cause, you are going to want to use the command
       <i>scheduleCollect</i>. The command <i>scheduleCollect</i> schedules the application
-      to start scrapping at a particular time of day. For example, </i>scheduleCollect "23:00"</i> would
-      start scrapping at 11am. Remember that the quotes must be included. Note, the server might be at a different
-      time zone then your computer, so make sure to check the time on your computer when scheduling.
+      to scrape between the hours of the start time, and end time. For example, </i>scheduleCollect "23:00" "23:30"</i> would
+      start scrapping at 11am and end at 11:30am. Scrapping would occur at those times each day.
+      The quotes must be included. Pay attention to the clock of the system you are using because it may very.
+      The server time is different then the time on my computer.
     </p>
     <p>
       Side note: <i>sampleCollect</i>, and <i>sampleStore</i> will be quite useful when testing the collection
@@ -56,5 +57,10 @@
       <li>exit</li>
     </ul>
 
+
+    <h3>Special Links</h3>
+    <ul>
+      <li><a href="scrapyd.html">Installing Scrapyd</a></li>
+    </ul>
   </body>
 </html>
